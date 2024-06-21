@@ -43,59 +43,29 @@ public class LinkStack {
         return (x);
     }
 
-    public void sort1() {
-        if (isEmpty() || head.next == null) {
-            // Stack is empty or has only one element, no need to sort
-            return;
-        }
-
-        LinkStack sortedStack = new LinkStack();
-        while (!isEmpty()) {
-           Node temp = (Node) pop();
-            while (!sortedStack.isEmpty() && (sortedStack.top().equals(temp))) {
-                push(sortedStack.pop());
-            }
-            sortedStack.push(temp);
-        }
-
-        // Copy the sorted elements back to the original stack
-        while (!sortedStack.isEmpty()) {
-            push(sortedStack.pop());
-        }
-    }
     public void sort() {
-        if (isEmpty() || head.next == null) {
-            // Stack is empty or has only one element, no need to sort
+        LinkStack sortStack = new LinkStack();
+        if (isEmpty()) {
+            System.out.println("stack empty");
             return;
         }
-
-        boolean sorted = false;
-        while (!sorted) {
-            sorted = true;
-            Node current = head;
-            Node prev = null;
-            while (current.next != null) {
-                if (current.data.equals(current.next.data)) {
-                    // Swap the adjacent elements
-                    Node nextNode = current.next;
-                    current.next = nextNode.next;
-                    nextNode.next = current;
-                    if (prev == null) {
-                        // Update head if the first element was swapped
-                        head = nextNode;
-                    } else {
-                        prev.next = nextNode;
-                    }
-                    // Update the current node as the swapped node
-                    prev = nextNode;
-                    sorted = false;
-                } else {
-                    // Move to the next pair of elements
-                    prev = current;
-                    current = current.next;
-                }
-            }
+        if (head.next == null) {
+            System.out.println("1 stack");
+            return;
         }
+        while (!isEmpty()) {
+            Object tmp = pop();
+//B1: if object sorted < tmp : return stack
+            while (!sortStack.isEmpty() && ((int) sortStack.top() < (int) tmp)) {
+                push(sortStack.pop());
+            }
+//B2: else push tmp on sorted
+            sortStack.push(tmp);
+        }
+        while (!sortStack.isEmpty()) {
+            push(sortStack.pop());
+        }
+
     }
 
     public void display() {
@@ -108,38 +78,22 @@ public class LinkStack {
         System.out.println();
     }
 
-    public boolean search(Object target) {
-        Node current = head;
-        while (current != null) {
-            if (current.data.equals(target)) {
-                return true;
-            }
-            current = current.next;
+    public void delete(Object x) {
+        if (isEmpty()) {
+            return;
         }
-        return false;
-    }
-    
-     public boolean search1(Object target) {
         LinkStack tempStack = new LinkStack();
-        boolean found = false;
-
         while (!isEmpty()) {
             Object element = pop();
-            if (element.equals(target)) {
-                found = true;
+            if (!element.equals(x)) {
+                tempStack.push(element);
             }
-            tempStack.push(element);
         }
 
-        // Restore the original stack
         while (!tempStack.isEmpty()) {
             push(tempStack.pop());
         }
 
-        return found;
     }
-    
-    
+
 }
-
-

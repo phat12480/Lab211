@@ -3,25 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package stack;
+package Tree;
 
 /**
  *
- * @author ADMIN
+ * @author User
  */
 public class Node {
 
-    public Object data;
-    public Node next;
+    int data;
+    Node left, right;
 
-    public Node(Object x, Node p) {
-        this.data = x;
-        this.next = p;
+    Node() {
     }
 
-    public Node(Object x) {
-        this.data=x;
-        this.next=null;
+    Node(int x, Node p, Node q) {
+        this.data = x;
+        left = p;
+        right = q;
+    }
+
+    Node(int x) {
+        this.data = x;
+        left = null;
+        right = null;
     }
 
 }

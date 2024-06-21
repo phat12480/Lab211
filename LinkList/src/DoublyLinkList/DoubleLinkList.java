@@ -15,14 +15,20 @@ public class DoubleLinkList {
         MyList list = new MyList();
         list.add(2);
         list.add(2);
-        list.add(2);
+        list.add(4);
         list.add(9);
         list.add(3);
         list.add(2);
-        list.add(2);
+        list.add(6);
         list.traverse();
       
-        list.bubbleSort();
+        list.Sort();
+        list.traverse();
+        list.delete(3);
+        list.traverse();
+        list.delete(9);
+        list.traverse();
+        list.delete(2);
         list.traverse();
 
     }

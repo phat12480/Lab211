@@ -3,25 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package stack;
+package SingleLink;
 
 /**
  *
- * @author ADMIN
+ * @author User
  */
 public class Node {
 
-    public Object data;
-    public Node next;
+    int data;
+    Node next;
 
-    public Node(Object x, Node p) {
-        this.data = x;
-        this.next = p;
+    public Node() {
     }
 
-    public Node(Object x) {
-        this.data=x;
-        this.next=null;
+    public Node(int data, Node next) {
+        this.data = data;
+        this.next = next;
     }
-
 }

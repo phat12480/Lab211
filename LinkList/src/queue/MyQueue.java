@@ -43,40 +43,27 @@ public class MyQueue {
 
     void enqueue(Object x) {
         if (isEmpty()) {
-            head = tail = new Node(x);
+            head = tail = new Node(x, null);
         } else {
-            tail.next = new Node(x);
+            Node newNode = new Node(x, null);
+            tail.next = newNode;
             tail = tail.next;
         }
     }
 
+    public void deleteValue(Object value) throws Exception {
+        MyQueue tempQueue = new MyQueue();
 
-
-    public void sort() {
-        if (isEmpty() || head == tail) {
-            return; // No need to sort if the queue is empty or has only one element
+        while (!isEmpty()) {
+            Object element = dequeue();
+            if (!element.equals(value)) {
+                tempQueue.enqueue(element);
+            }
         }
 
-        boolean swapped;
-        Node current;
-        Node nextNode = null;
-
-        do {
-            swapped = false;
-            current = head;
-
-            while (current.next != nextNode) {
-                if (((Comparable) current.data).compareTo(current.next.data) > 0) {
-                    // Swap the data of the current and next nodes
-                    Object temp = current.data;
-                    current.data = current.next.data;
-                    current.next.data = temp;
-                    swapped = true;
-                }
-                current = current.next;
-            }
-            nextNode = current;
-        } while (swapped);
+        while (!tempQueue.isEmpty()) {
+            enqueue(tempQueue.dequeue());
+        }
     }
 
     public void display() {
@@ -94,4 +81,69 @@ public class MyQueue {
         System.out.println();
     }
 
+    public void sortQueue() throws Exception {
+        if (isEmpty()) {
+            // Queue is empty or has only one element, no need to sort
+            return;
+        }
+
+        MyQueue sortedQueue = new MyQueue();
+        while (!isEmpty()) {
+            Object temp = dequeue();
+            // Insert temp in sorted order into sortedQueue
+            while (!sortedQueue.isEmpty() && (int) sortedQueue.front() < (int) temp) {
+                enqueue(sortedQueue.dequeue());
+            }
+            sortedQueue.enqueue(temp);
+
+        }
+
+        // Copy the sorted elements back to the original queue
+        while (!sortedQueue.isEmpty()) {
+            enqueue(sortedQueue.dequeue());
+        }
+    }
+
+    public int getSize() {
+        Node p = head;
+        int i = 0;
+        while (p != null) {
+            p = p.next;
+            i++;
+        }
+
+        return i;
+    }
+
+    public void sort() throws Exception {
+        MyQueue q2 = new MyQueue();
+        Object temp = null;
+        Object min = null;
+        Node p = head;
+        int i = 0;
+        int k = getSize();
+        while (true) {
+            i++;
+            if (q2.isEmpty() || (Integer) front() <= (Integer) min) {
+                min = front();
+                q2.enqueue(dequeue());
+            } else if ((Integer) front() > (Integer) min) {
+                enqueue(dequeue());
+            }
+            if (isEmpty()) {
+                while (!q2.isEmpty()) {
+                    enqueue(q2.dequeue());
+                }
+                return;
+            }
+            if (i == k) {
+                while (!q2.isEmpty()) {
+                    enqueue(q2.dequeue());
+                }
+                i = 0;
+                display();
+            }
+
+        }
+    }
 }
